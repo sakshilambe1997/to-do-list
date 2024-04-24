@@ -6,27 +6,32 @@
     <title>To-Do-List</title>
 </head>
 <body>
-    <div class="list-container">
+    <div class="list-container" id="list-container">
 
     </div>
 
     <div class="action-container">
         <input type="text" id="input-todo">
     <button type="button" onclick="add()">Add</button>
-    <button onclick="show()">Show</button>
 </div>
 
     <script>
         const todolist=[];
-
         function add(){
            const inputElement=document.getElementById("input-todo");
            todolist.push(inputElement.value);
            inputElement.value="";
+           renderToDoList()
         }
 
-        function show(){
-            console.log(todolist);
+        function renderToDoList(){
+            const listContainer =document.getElementById("list-container");
+            listContainer.innerHTML="";
+
+            for(const todoItem of todolist ){
+                listContainer.innerHTML+=`<div class=todo-item>${todoItem}</div>`
+            }
+
         }
     </script>
     
