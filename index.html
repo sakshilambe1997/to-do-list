@@ -13,15 +13,20 @@
     <div class="action-container">
         <input type="text" id="input-todo">
     <button type="button" onclick="add()">Add</button>
+    <button onclick="show()">Show</button>
 </div>
 
-    <script>g
+    <script>
         const todolist=[];
 
         function add(){
            const inputElement=document.getElementById("input-todo");
            todolist.push(inputElement.value);
+           inputElement.value="";
+        }
 
+        function show(){
+            console.log(todolist);
         }
     </script>
     
