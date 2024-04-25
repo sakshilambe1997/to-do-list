@@ -12,7 +12,7 @@
         }
 
         .list-container{
-            background-color: #ffe6cc;
+            background-color: #ffd699;
             width: 300px;
             display: block;
             margin: 20px auto;
@@ -29,6 +29,20 @@
             margin: 5px;
             color: white;
         }
+
+        .input-box{
+            width: 220px;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .button{
+            padding: 5px 12px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 10px;
+            margin: 5px;
+        }
     </style>
 </head>
 <body>
@@ -38,8 +52,8 @@
     </div>
 
     <div class="action-container">
-        <input type="text" id="input-todo">
-    <button type="button" onclick="add()">Add</button>
+        <input type="text" id="input-todo" class="input-box">
+    <button type="button" onclick="add()" class="button">Add</button>
 </div>
 
     <script>
