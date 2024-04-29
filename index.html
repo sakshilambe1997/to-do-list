@@ -6,10 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do-List</title>
     <style>
+
+        .todo-list-main-container{
+            width: 460px;
+            display: block;
+            margin:50px auto;
+           
+        }
         .action-container {
             display: flex;
             justify-content: center;
             margin-top: 20px;
+            align-items: center;
         }
 
         .list-container {
@@ -32,20 +40,31 @@
             border-radius: 30px;
             margin: 5px;
             color: white;
+            position: relative;
         }
 
         .input-box {
             width: 220px;
             border-radius: 10px;
             padding: 10px;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
+            border: 2px solid grey;
 
         }
 
+        .bin-img{
+            height: 20px;
+            position: absolute;
+            top:7px;
+            right:10px;
+            cursor: pointer;
+        }
+
         .button {
-            padding: 5px 12px;
-            font-size: 18px;
+            padding: 3px 10px;
+            font-size: 12px;
+            height: 40px;
             font-weight: bold;
             border-radius: 10px;
             margin: 5px;
@@ -59,45 +78,109 @@
         .button:hover {
             background-color: #8EC5FC;
             background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
-             color: black;
+            color: black;
             border: 2px solid blueviolet;
+        }
+
+        @media screen and (min-width:300px) and (max-width:480px) {
+
+            .todo-list-main-container{
+            width: 80%;
+            display: block;
+            margin:100px auto;
+        }
+
+            .action-container {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+
+            .list-container {
+                width: 80%;
+                margin-top: 100px;
+                border-radius: 5px;
+                height: 250px;
+                font-size: 18px;
+            }
+
+            .todo-item {
+                padding: 5px 20px;
+              
+
+            }
+
+            .input-box {
+                width: 60%;
+                font-size: 18px;
+                height: 10px;
+            }
+
+            .button {
+                padding: 0 6px;
+                font-size: 12px;
+                margin: 2px;
+                height: 30px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="list-container" id="list-container">
+    <div class="todo-list-main-container">
+        <div class="list-container" id="list-container">
 
+
+        </div>
+
+        <div class="action-container">
+            <input type="text" id="input-todo" class="input-box">
+            <button type="button" onclick="add()" class="button">ADD</button>
+        </div>
 
     </div>
 
-    <div class="action-container">
-        <input type="text" id="input-todo" class="input-box">
-        <button type="button" onclick="add()" class="button">ADD</button>
-    </div>
 
     <script>
-        let todolist = [];
-        const listFromLocalStorage=localStorage.getItem(todolist);
-        if(listFromLocalStorage){
-            todoList=JSON.parse(listFromLocalStorage);
+        let todoList = [];
+        const listFromLocalStorage = localStorage.getItem("todoList");
+        if (listFromLocalStorage) {
+            todoList = JSON.parse(listFromLocalStorage);
+            renderToDoList();
         }
         function add() {
             const inputElement = document.getElementById("input-todo");
-            localStorage.setItem("todolist",JSON.stringify(todolist));
-            todolist.push(inputElement.value);
+            if (inputElement.value == "") {
+                alert("Task should not be Empty");
+                return;
+            }
+            todoList.push(inputElement.value);
+            localStorage.setItem("todoList", JSON.stringify(todoList));
+
             inputElement.value = "";
             renderToDoList()
         }
+      
 
         function renderToDoList() {
             const listContainer = document.getElementById("list-container");
             listContainer.innerHTML = "";
 
-            for (const todoItem of todolist) {
-                listContainer.innerHTML += `<div class=todo-item> <input type="checkbox"/>${todoItem}</div>`
+            for (const todoItem of todoList) {
+                listContainer.innerHTML += `<div class=todo-item>${todoItem}
+                    <img src="./bin.png" class="bin-img" onclick="removeTask('${todoItem}')"/></div>`
             }
         }
+        
+
+
+            function removeTask(taskItem){
+                const index=todoList.indexOf(taskItem);
+                todoList.splice(index,1);
+                localStorage.setItem("todoList", JSON.stringify(todoList));
+                renderToDoList();
+            }
+        
     </script>
 
 </body>
