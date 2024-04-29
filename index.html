@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do-List</title>
     <style>
-        .action-container{
+        .action-container {
             display: flex;
             justify-content: center;
             margin-top: 20px;
         }
 
-        .list-container{
+        .list-container {
             background-color: #ffd699;
-            width: 300px;
+            width: 350px;
             display: block;
-            margin: 20px auto;
+            margin: 0 auto;
             padding: 10px;
+            margin-top: 50px;
             border-radius: 5px;
-            height: 200px;
+            height: 250px;
             overflow-y: scroll;
+            font-size: 20px;
+            border: 2px solid rgb(243, 205, 137);
         }
 
-        .todo-item{
+        .todo-item {
             background-color: #ff9933;
             padding: 5px 20px;
             border-radius: 30px;
@@ -30,50 +34,72 @@
             color: white;
         }
 
-        .input-box{
+        .input-box {
             width: 220px;
             border-radius: 10px;
             padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+
         }
 
-        .button{
+        .button {
             padding: 5px 12px;
             font-size: 18px;
             font-weight: bold;
             border-radius: 10px;
             margin: 5px;
+            background-color: #00DBDE;
+            background-image: linear-gradient(90deg, #00DBDE 0%, #FC00FF 100%);
+            border: 2px solid #8ca5e4;
+            cursor: pointer;
+            color: white;
+        }
+
+        .button:hover {
+            background-color: #8EC5FC;
+            background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+             color: black;
+            border: 2px solid blueviolet;
         }
     </style>
 </head>
+
 <body>
     <div class="list-container" id="list-container">
-        
+
 
     </div>
 
     <div class="action-container">
         <input type="text" id="input-todo" class="input-box">
-    <button type="button" onclick="add()" class="button">Add</button>
-</div>
+        <button type="button" onclick="add()" class="button">ADD</button>
+    </div>
 
     <script>
-        const todolist=[];
-        function add(){
-           const inputElement=document.getElementById("input-todo");
-           todolist.push(inputElement.value);
-           inputElement.value="";
-           renderToDoList()
+        let todolist = [];
+        const listFromLocalStorage=localStorage.getItem(todolist);
+        if(listFromLocalStorage){
+            todoList=JSON.parse(listFromLocalStorage);
+        }
+        function add() {
+            const inputElement = document.getElementById("input-todo");
+            localStorage.setItem("todolist",JSON.stringify(todolist));
+            todolist.push(inputElement.value);
+            inputElement.value = "";
+            renderToDoList()
         }
 
-        function renderToDoList(){
-            const listContainer =document.getElementById("list-container");
-            listContainer.innerHTML="";
+        function renderToDoList() {
+            const listContainer = document.getElementById("list-container");
+            listContainer.innerHTML = "";
 
-            for(const todoItem of todolist ){
-                listContainer.innerHTML+=`<div class=todo-item> <input type="checkbox"/>${todoItem}</div>`
+            for (const todoItem of todolist) {
+                listContainer.innerHTML += `<div class=todo-item> <input type="checkbox"/>${todoItem}</div>`
             }
         }
     </script>
-    
+
 </body>
+
 </html>
